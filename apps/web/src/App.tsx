@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter as Router, Route, Navigate, Routes, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import { lazy, Suspense } from "react"
 
 const Home = lazy(() => import('./pages/Home'))
