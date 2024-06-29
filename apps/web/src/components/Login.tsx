@@ -27,27 +27,27 @@ const companies = [
     }
 ]
 
-const Signup = () => {
+const Login = () => {
     const context = useContext(AuthContext);
 
     if (!context) {
-        throw new Error('Signup must be used within an AuthProvider');
+        throw new Error('Login must be used within an AuthProvider');
     }
 
-    const { signup } = context;
+    const { login } = context;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        await signup(email, password);
+        await login(email, password);
     };
 
-    const googleSignup = () => {
+    const googleLogin = () => {
         window.location.href = 'http://localhost:5000/v1/auth/google';
     };
 
-    const githubSignup = () => {
+    const githubLogin = () => {
         window.location.href = 'http://localhost:5000/v1/auth/github';
     };
 
@@ -55,7 +55,7 @@ const Signup = () => {
         <div className={style.main}>
             <div className="fixed inset-0 bg-black opacity-50" onClick={() => { }}></div>
             <div className={style.box}>
-                <h2 className="text-center text-2xl font-bold text-black mb-4">Create Your Account</h2>
+                <h2 className="text-center text-2xl font-bold text-black mb-4">Login to Your Account</h2>
                 <form onSubmit={handleSubmit} className='w-[90%] mx-auto'>
                     <div className="mb-4">
                         <label className="block text-black mb-2">Email</label>
@@ -78,7 +78,7 @@ const Signup = () => {
                         />
                     </div>
                     <button type="submit" className={style.button}>
-                        <span className={style.text}>Sign Up</span>
+                        <span className={style.text}>Login</span>
                     </button>
                     <div className="flex items-center my-4">
                         <hr className={style.hr} />
@@ -87,21 +87,15 @@ const Signup = () => {
                     </div>
                     <div className="flex space-x-4 mb-4">
                         {companies.map((item, index) => (
-                            <button key={index} className={style.button2} onClick={item.text === 'Google' ? googleSignup : githubSignup}>
+                            <button key={index} className={style.button2} onClick={item.text === 'Google' ? googleLogin : githubLogin}>
                                 <img src={item.logo} alt={item.alt} className="mr-2 w-7 h-7" />
                                 <span className={style.text}>{item.text}</span>
                             </button>
                         ))}
                     </div>
                     <div className="mx-auto w-[70%] text-center">
-                        <span className={style.checkout}>
-                            <input type="checkbox" className="mr-2" />
-                            I have read and agree to the following documents:
-                        </span>
-                        <a href="" className="text-[10px] text-[#1F82E8] underline">General terms & privacy policy</a>
-                        <br />
                         <span className="text-xs text-black">
-                            Are you an existing user? <a href="" className="text-[#1F82E8] underline">Sign in</a>
+                            New user? <a href="/signup" className="text-[#1F82E8] underline">Create an account</a>
                         </span>
                     </div>
                 </form>
@@ -110,4 +104,4 @@ const Signup = () => {
     );
 };
 
-export default Signup;
+export default Login;
