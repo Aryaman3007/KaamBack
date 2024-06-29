@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import logo from '../assets/logo.jpg';
 import { Link } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
@@ -10,7 +10,7 @@ const Navbar = () => {
     { path: "/", label: "Home" },
     { path: "/career", label: "Career" },
     { path: "/ourteam", label: "Our Team" },
-    { path: "/signin", label: "Sign in" },
+    { path: "/login", label: "Login" },
   ];
 
   return (
