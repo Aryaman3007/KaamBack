@@ -3,7 +3,16 @@ const passport = require("passport");
 const { signup, login, googleAuth } = require("../controllers/auth");
 const router = express.Router();
 
-router.post("/signup", signup);
+router.post(
+  "/signup",
+  (req, res, next) => {
+    console.log("Signup endpoint hit");
+    console.log("Request body:", req.body);
+    next();
+  },
+  signup
+);
+
 router.post("/login", login);
 
 router.get(

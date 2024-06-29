@@ -2,6 +2,7 @@ import { useState, useContext, FormEvent } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import Google from "../assets/google.png";
 import Github from "../assets/github.png";
+import axios from 'axios';
 
 const style = {
     main: `fixed inset-0 flex items-center justify-center z-20 px-4`,
@@ -11,7 +12,8 @@ const style = {
     text: `text-center flex-1`,
     hr: `flex-grow border-black`,
     button2: `flex items-center justify-center w-full border border-black text-black py-2 rounded-lg px-4`,
-    checkout: `flex justify-center items-center w-full text-gray-900 text-xs mb-2`
+    checkout: `flex justify-center items-center w-full text-gray-900 text-xs mb-2`,
+    input: `w-full p-2 border border-gray-300 rounded-lg text-black`
 }
 
 const companies = [
@@ -34,13 +36,20 @@ const Login = () => {
         throw new Error('Login must be used within an AuthProvider');
     }
 
-    const { login } = context;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        await login(email, password);
+        console.log("Form submitted");
+        console.log("Email:", email);
+        console.log("Password:", password);
+        try {
+            const response = await axios.post('http://localhost:5000/v1/auth/login', { email, password });
+            console.log("Signup successful:", response.data);
+        } catch (error) {
+            console.error("Signup error:", error);
+        }
     };
 
     const googleLogin = () => {
@@ -64,7 +73,7 @@ const Login = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            className="w-full p-2 border border-gray-300 rounded-lg"
+                            className={style.input}
                         />
                     </div>
                     <div className="mb-4">
@@ -74,31 +83,31 @@ const Login = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
-                            className="w-full p-2 border border-gray-300 rounded-lg"
+                            className={style.input}
                         />
                     </div>
                     <button type="submit" className={style.button}>
                         <span className={style.text}>Login</span>
                     </button>
-                    <div className="flex items-center my-4">
-                        <hr className={style.hr} />
-                        <span className="px-4 text-[#1F82E8]">OR</span>
-                        <hr className={style.hr} />
-                    </div>
-                    <div className="flex space-x-4 mb-4">
-                        {companies.map((item, index) => (
-                            <button key={index} className={style.button2} onClick={item.text === 'Google' ? googleLogin : githubLogin}>
-                                <img src={item.logo} alt={item.alt} className="mr-2 w-7 h-7" />
-                                <span className={style.text}>{item.text}</span>
-                            </button>
-                        ))}
-                    </div>
-                    <div className="mx-auto w-[70%] text-center">
-                        <span className="text-xs text-black">
-                            New user? <a href="/signup" className="text-[#1F82E8] underline">Create an account</a>
-                        </span>
-                    </div>
                 </form>
+                <div className="flex items-center my-4">
+                    <hr className={style.hr} />
+                    <span className="px-4 text-[#1F82E8]">OR</span>
+                    <hr className={style.hr} />
+                </div>
+                <div className="flex space-x-4 mb-4">
+                    {companies.map((item, index) => (
+                        <button key={index} className={style.button2} onClick={item.text === 'Google' ? googleLogin : githubLogin}>
+                            <img src={item.logo} alt={item.alt} className="mr-2 w-7 h-7" />
+                            <span className={style.text}>{item.text}</span>
+                        </button>
+                    ))}
+                </div>
+                <div className="mx-auto w-[70%] text-center">
+                    <span className="text-xs text-black">
+                        New user? <a href="/signup" className="text-[#1F82E8] underline">Create an account</a>
+                    </span>
+                </div>
             </div>
         </div>
     );

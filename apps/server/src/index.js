@@ -4,10 +4,19 @@ const dotenv = require("dotenv");
 const passport = require("passport");
 const authRoutes = require("./routes/auth");
 const passportConfig = require("./config");
+const cors = require("cors");
 
 dotenv.config();
 
 const app = express();
+
+app.use(
+  cors({
+    origin: "http://localhost:8080",
+    methods: "GET,POST,PUT,DELETE",
+    allowedHeaders: "Content-Type,Authorization",
+  })
+);
 
 app.use(express.json());
 app.use(passport.initialize());
